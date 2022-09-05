@@ -1,2 +1,3 @@
 # QuickPushQuiz
-Discord向けの早押しボタンクイズ
+Discord向けの早押しボタンクイズ  
+Cinnamonさんが作った早押しボタンを複数のサーバーで使える様に変換したものだぞ！
