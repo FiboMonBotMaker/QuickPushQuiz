@@ -1,0 +1,37 @@
+version: '3.8'
+
+volumes:
+  roledb:
+
+services:
+  main:
+    build: .
+    volumes:
+      - ./bot:/usr/src/bot:rw
+    environment:
+      - TOKEN=${TOKEN}
+      - GUILDS=${GUILDS}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD} 
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_USER=${MARIADB_USER}
+    depends_on:
+      - db
+    tty: true
+    command: ["python3", "main.py"]
+    restart: always
+
+  db:
+    image: mariadb:10.8.3-jammy
+    volumes:
+      - roledb:/var/lib/mysql:rw
+    ports:
+      - 4646:3306
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD} 
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD} 
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+    restart: always
